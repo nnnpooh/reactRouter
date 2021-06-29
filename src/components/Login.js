@@ -1,12 +1,16 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import userContext from '../context/userContext';
 
 function Login() {
   let history = useHistory();
   const handleLogin = () => {
-    localStorage.setItem("isAuthenticated", true);
-    history.push("/");
+    localStorage.setItem('isAuthenticated', true);
+    setUser('New User');
+    history.push('/');
   };
+
+  const { setUser } = useContext(userContext);
 
   return (
     <div>

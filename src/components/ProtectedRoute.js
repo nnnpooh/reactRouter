@@ -1,15 +1,17 @@
-import React from "react";
-import { Redirect, Route } from "react-router-dom";
+import React, { useContext } from 'react';
+import { Redirect, Route } from 'react-router-dom';
+import userContext from '../context/userContext';
 
 function ProtectedRoute({ component: Component, ...restOfProps }) {
-  const isAuthenticated = localStorage.getItem("isAuthenticated");
-  console.log("this", isAuthenticated);
+  const { user } = useContext(userContext);
+  //const isAuthenticated = localStorage.getItem('isAuthenticated');
+  //console.log("this", isAuthenticated);
 
   return (
     <Route
       {...restOfProps}
       render={(props) =>
-        isAuthenticated ? <Component {...props} /> : <Redirect to="login" />
+        user ? <Component {...props} /> : <Redirect to='login' />
       }
     ></Route>
   );
