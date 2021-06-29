@@ -1,22 +1,22 @@
-import React, { useContext, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import userContext from '../context/userContext';
+import React, { useState, useContext } from 'react';
 import { auth } from '../firebase';
+import { useHistory } from 'react-router-dom';
+import userContext from '../context/userContext';
 
-function Login() {
+function SignIn() {
   let history = useHistory();
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-    //localStorage.setItem('isAuthenticated', true);
     auth
-      .signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        const { user } = userCredential;
+      .createUserWithEmailAndPassword(email, password)
+      .then((userObj) => {
+        const { user } = userObj;
+        //console.log(userObj);
         setUser(user.email);
         history.push('/');
       })
       .catch(console.log);
-  };
+  }
 
   function handleChange(e, type) {
     switch (type) {
@@ -34,18 +34,20 @@ function Login() {
   const { setUser } = useContext(userContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  //const [errorMessage, setErrorMessage] = useState('');
   return (
     <div>
-      <h1>login</h1>
+      <h1>Sign Up</h1>
 
       <form onSubmit={handleSubmit}>
         <label>
-          Email
+          email
           <input
             type='email'
             value={email}
             onChange={(e) => handleChange(e, 'email')}
-          />
+            autoComplete='email'
+          ></input>
         </label>
         <label>
           Password
@@ -53,16 +55,13 @@ function Login() {
             type='password'
             value={password}
             onChange={(e) => handleChange(e, 'password')}
-          />
+            autoComplete='current-password'
+          ></input>
         </label>
-        <input type='submit' />
+        <input type='submit' value='Submit' />
       </form>
-
-      <p>
-        or <Link to='/signup'>Sign Up</Link>
-      </p>
     </div>
   );
 }
 
-export default Login;
+export default SignIn;

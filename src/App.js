@@ -6,6 +6,8 @@ import User from './components/User';
 import ProtectedRoute from './components/ProtectedRoute';
 import Nav from './components/Nav';
 import userContext from './context/userContext';
+import SignUp from './components/SignUp';
+
 function App() {
   const [user, setUser] = useState('');
 
@@ -14,6 +16,7 @@ function App() {
       <Nav />
       <Switch>
         <Route path='/login' component={Login} />
+        <Route path='/signup' component={SignUp} />
         <ProtectedRoute path='/user' component={User} />
         <ProtectedRoute exact path='/' component={Home} />
       </Switch>
