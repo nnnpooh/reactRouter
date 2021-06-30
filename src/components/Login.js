@@ -1,19 +1,16 @@
-import React, { useContext, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import userContext from '../context/userContext';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { auth } from '../firebase';
 
 function Login() {
-  let history = useHistory();
   const handleSubmit = (e) => {
     e.preventDefault();
     //localStorage.setItem('isAuthenticated', true);
     auth
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        const { user } = userCredential;
-        setUser(user.email);
-        history.push('/');
+        //const { user } = userCredential;
+        console.log('Login Successfully');
       })
       .catch(console.log);
   };
@@ -31,7 +28,6 @@ function Login() {
     }
   }
 
-  const { setUser } = useContext(userContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   return (

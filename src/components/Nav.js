@@ -1,12 +1,22 @@
 import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import userContext from '../context/userContext';
+import { auth } from '../firebase';
 function Nav() {
   let history = useHistory();
   const handleLogOut = () => {
-    localStorage.clear();
-    setUser('');
-    history.push('/login');
+    auth
+      .signOut()
+      .then(() => {
+        localStorage.clear();
+        setUser('');
+        history.push('/login');
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        console.error(error);
+        // An error happened.
+      });
   };
 
   let { user, setUser } = useContext(userContext);
